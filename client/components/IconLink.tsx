@@ -3,7 +3,7 @@ import { classNames } from '../../utils/styles'
 
 export interface IconlinkProps {
   gap?: number
-  iconText: string
+  iconText?: string
   leftIcon?: JSX.Element
   rightIcon?: JSX.Element
   noLeftPadding?: boolean
@@ -31,7 +31,7 @@ const IconLink = ({
         onClick={handleButtonClick}
       >
         {leftIcon && <span className="iconlink__image iconlink__image--left">{leftIcon}</span>}
-        <span className="iconlink__text">{iconText}</span>
+        {iconText && <span className="iconlink__text">{iconText}</span>}
         {rightIcon && <span className="iconlink__image iconlink__image--right">{rightIcon}</span>}
       </button>
 
@@ -42,7 +42,8 @@ const IconLink = ({
           font-size: 14px;
           background-color: transparent;
           border: none;
-          padding: ${gap / 2}rem ${gap}rem;
+          padding: ${gap / 2}rem ${gap / 2}rem;
+          margin: 0 ${gap / 2}rem;
           cursor: pointer;
         }
         .iconlink__image {
@@ -57,19 +58,22 @@ const IconLink = ({
 
         @media (${media.xsPlus}) {
           .iconlink {
-            padding: ${gap / 2}rem ${gap * 1.25}rem;
+            padding: ${gap / 2}rem ${gap * 0.625}rem;
+            margin: 0 ${gap * 0.625}rem;
           }
         }
 
         @media (${media.smPlus}) {
           .iconlink {
-            padding: ${gap / 2}rem ${gap * 2}rem;
+            padding: ${gap / 2}rem ${gap}rem;
+            margin: 0 ${gap}rem;
           }
         }
 
         @media (${media.mdPlus}) {
           .iconlink {
-            padding: ${gap / 2}rem ${gap / 0.75}rem;
+            padding: ${gap / 2}rem ${gap / 1.5}rem;
+            margin: 0 ${gap / 1.5}rem;
             font-size: 12px;
           }
           .iconlink__text {
@@ -80,16 +84,17 @@ const IconLink = ({
 
         @media (${media.lgPlus}) {
           .iconlink {
-            padding: ${gap / 2}rem ${gap / 0.75}rem;
             font-size: 16px;
           }
         }
 
         .iconlink--no-left-padding {
           padding-left: 0;
+          margin-left: 0;
         }
         .iconlink--no-right-padding {
           padding-right: 0;
+          margin-right: 0;
         }
       `}</style>
     </>
