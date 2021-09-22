@@ -30,4 +30,8 @@ export const appTheme = {
   borderRadius: '0.25rem',
   border: `1px solid ${appColors.independence}`,
   lineHeight: '1.5',
+
+  fontWeightNormal: 400,
+  fontWeightBold: 600,
+  fontWeightMega: 900,
 }
