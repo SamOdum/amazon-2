@@ -4,8 +4,11 @@ import { Heart, Menu, Settings, ShoppingCart, User } from 'react-feather'
 import { appColors, appTheme, media } from '../../styles/variables'
 import Container from '../components/Container'
 import IconLink from '../components/IconLink'
+import Modal, { MobileNav } from '../components/Modal'
+import { useNavModal } from '../store/stateHooks'
 
 const HeaderCol1 = (): JSX.Element => {
+  const [, setNavModal] = useNavModal()
   return (
     <div className="header-col1">
       <span className="menu-toggle">
@@ -13,7 +16,7 @@ const HeaderCol1 = (): JSX.Element => {
           leftIcon={<Menu />}
           noLeftPadding={true}
           noRightPadding={true}
-          handleButtonClick={() => alert('cliked')}
+          onClick={setNavModal}
         />
       </span>
       <span className="logo">
@@ -72,13 +75,16 @@ const HeaderCol2 = (): JSX.Element => {
 
 const Header = (): JSX.Element => {
   return (
-    <header>
+    <>
       <Container>
         <div className="header">
           <HeaderCol1 />
           <HeaderCol2 />
         </div>
       </Container>
+      <Modal>
+        <MobileNav />
+      </Modal>
 
       <style jsx>{`
         .header {
@@ -87,9 +93,10 @@ const Header = (): JSX.Element => {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          position: relative;
         }
       `}</style>
-    </header>
+    </>
   )
 }
 

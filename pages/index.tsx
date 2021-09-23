@@ -25,6 +25,7 @@ const IndexPage: NextPage<Props> = ({ launch }) => {
           rel="stylesheet"
         />
       </Head>
+
       <Header />
       <main>
         <Container>
@@ -41,15 +42,15 @@ const IndexPage: NextPage<Props> = ({ launch }) => {
               error aliquam! Nobis praesentium exercitationem necessitatibus doloremque. Ab quis
               reprehenderit nostrum praesentium reiciendis.
             </p>
-
-            <style jsx>{`
-              .para {
-                text-align: justify;
-              }
-            `}</style>
           </>
         </Container>
       </main>
+
+      <style jsx>{`
+        .para {
+          text-align: justify;
+        }
+      `}</style>
     </>
   )
 }

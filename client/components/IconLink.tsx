@@ -8,7 +8,7 @@ export interface IconlinkProps {
   rightIcon?: JSX.Element
   noLeftPadding?: boolean
   noRightPadding?: boolean
-  handleButtonClick?: () => void
+  onClick?: () => void
 }
 
 const IconLink = ({
@@ -18,7 +18,7 @@ const IconLink = ({
   rightIcon,
   noLeftPadding,
   noRightPadding,
-  handleButtonClick,
+  onClick,
 }: IconlinkProps): JSX.Element => {
   return (
     <>
@@ -28,7 +28,7 @@ const IconLink = ({
           noLeftPadding && 'iconlink--no-left-padding',
           noRightPadding && 'iconlink--no-right-padding'
         )}
-        onClick={handleButtonClick}
+        onClick={onClick}
       >
         {leftIcon && <span className="iconlink__image iconlink__image--left">{leftIcon}</span>}
         {iconText && <span className="iconlink__text">{iconText}</span>}
