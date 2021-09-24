@@ -4,8 +4,8 @@ import { Heart, Menu, Settings, ShoppingCart, User } from 'react-feather'
 import { appColors, appTheme, media } from '../../styles/variables'
 import Container from '../components/Container'
 import IconLink from '../components/IconLink'
-import Modal, { MobileNav } from '../components/Modal'
 import { useNavModal } from '../store/stateHooks'
+import NavMobile from './NavMobile'
 
 const HeaderCol1 = (): JSX.Element => {
   const [, setNavModal] = useNavModal()
@@ -82,9 +82,7 @@ const Header = (): JSX.Element => {
           <HeaderCol2 />
         </div>
       </Container>
-      <Modal>
-        <MobileNav />
-      </Modal>
+      <NavMobile />
 
       <style jsx>{`
         .header {
