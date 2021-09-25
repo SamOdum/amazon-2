@@ -46,20 +46,25 @@ const HeaderCol1 = (): JSX.Element => {
 
 const HeaderCol2 = (): JSX.Element => {
   const iconSize = 20
+  const clickAlert = (): void => alert('You clicked')
 
   return (
     <div className="header__col2">
       <span className="header-col2__person">
-        <IconLink leftIcon={<User size={iconSize} />} />
+        <IconLink leftIcon={<User size={iconSize} />} onClick={clickAlert} />
       </span>
       <span className="header-col2__cart">
-        <IconLink leftIcon={<ShoppingCart size={iconSize} />} />
+        <IconLink leftIcon={<ShoppingCart size={iconSize} />} onClick={clickAlert} />
       </span>
       <span className="header-col2__heart">
-        <IconLink leftIcon={<Heart size={iconSize} />} />
+        <IconLink leftIcon={<Heart size={iconSize} />} onClick={clickAlert} />
       </span>
       <span className="header-col2__cog">
-        <IconLink leftIcon={<Settings size={iconSize} />} noRightPadding={true} />
+        <IconLink
+          leftIcon={<Settings size={iconSize} />}
+          noRightPadding={true}
+          onClick={clickAlert}
+        />
       </span>
 
       <style jsx>{`

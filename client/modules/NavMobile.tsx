@@ -3,7 +3,7 @@ import Modal from '../components/Modal'
 
 const NavMobile = (): JSX.Element => {
   return (
-    <Modal key="navmobile" alignment="left">
+    <Modal datakey="navmobile">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam labore eligendi maiores
         impedit quos tenetur quaerat adipisci quas neque aut, voluptate commodi nobis alias. Est

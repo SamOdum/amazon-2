@@ -6,21 +6,49 @@ import CloseButton from './CloseButton'
 import Container from './Container'
 
 interface ModalProps {
-  alignment?: 'left' | 'right'
   children: JSX.Element
-  key: string
+  datakey: string
+  pin?: 'top' | 'right' | 'bottom' | 'left' | 'center'
+  height?: string
+  width?: string
 }
 
-const Modal = ({ alignment = 'right', children, key }: ModalProps): JSX.Element => {
+const Modal = ({
+  children,
+  datakey,
+  pin = 'left',
+  height = '100vh',
+  width = '18rem',
+}: ModalProps): JSX.Element => {
   const [navModal, setNavModal] = useNavModal()
 
-  const horizontAl = alignment == 'left' ? 'start' : 'end'
-  const hEntrance = alignment == 'left' ? -100 : 100
+  const horizontalDock = pin === 'left' || pin === 'right'
+  const verticalDock = pin === 'top' || pin === 'bottom'
+  const unDocked = !horizontalDock && !verticalDock
+
+  const horizontalAligment = pin == 'left' ? 'start' : 'end'
+  const verticalAligment = pin == 'top' ? 'start' : 'end'
 
   return (
     <>
-      <div className={classNames('modal', navModal && 'modal modal--open')} data-key={key}>
-        <div className="modal__content">
+      <div
+        className={classNames(
+          'modal',
+          navModal && 'modal--open',
+          horizontalDock && 'modal--horizontal',
+          verticalDock && 'modal--vertical',
+          unDocked && 'modal--undocked'
+        )}
+        data-key={datakey}
+      >
+        <div
+          className={classNames(
+            'modal__content',
+            navModal && 'modal__content--open',
+            verticalDock && verticalAligment && 'modal__content--vertical',
+            unDocked && 'modal__content--undocked'
+          )}
+        >
           <Container>
             <>
               <header className="header">
@@ -35,29 +63,62 @@ const Modal = ({ alignment = 'right', children, key }: ModalProps): JSX.Element 
         {`
           .modal {
             position: fixed;
-            margin-top: -50px; // Must agree with height of nav
+            margin-top: -50px; // Must match with & offset Header height
             height: 100vh;
             width: 100vw;
             background-color: rgba(0, 0, 0, 0.5);
             display: flex;
-            justify-content: ${horizontAl};
-            z-index: 1;
-            opacity: 0.5;
-            transform: translateX(${hEntrance}%);
-            transition: all 0.4s;
+            z-index: -2;
+            opacity: 0;
+            transition: all 0.4s ease-in-out;
           }
 
           .modal--open {
-            transform: translateX(0%);
             opacity: 1;
+            z-index: 2;
+          }
+
+          .modal--horizontal {
+            justify-content: ${horizontalAligment};
+          }
+
+          .modal--vertical {
+            align-items: ${verticalAligment};
+            justify-content: center;
+          }
+
+          .modal--undocked {
+            justify-content: center;
+            align-items: center;
           }
 
           .modal__content {
             background-color: white;
-            width: 288px;
-            height: 100%;
-            z-index: 2;
+            width: ${width};
+            height: ${height};
+            z-index: -2;
             position: relative;
+            overflow: hidden;
+            opacity: 0;
+            // transform: translateX(${-100}%);
+            transition: all 0.2s 0.4s;
+          }
+
+          .modal__content--open {
+            opacity: 1;
+            z-index: 2;
+            // transform: translateX(0%);
+          }
+
+          .modal__content--vertical {
+            width: ${width};
+            height: ${height};
+            overflow: hidden;
+          }
+          .modal__content--undocked {
+            width: ${width};
+            height: ${height};
+            overflow: hidden;
           }
 
           .header {
