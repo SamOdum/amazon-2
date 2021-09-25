@@ -63,7 +63,7 @@ const Modal = ({
         {`
           .modal {
             position: fixed;
-            margin-top: -50px; // Must match with & offset Header height
+            top: 0;
             height: 100vh;
             width: 100vw;
             background-color: rgba(0, 0, 0, 0.5);
