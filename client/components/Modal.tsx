@@ -46,7 +46,8 @@ const Modal = ({
             'modal__content',
             navModal && 'modal__content--open',
             verticalDock && verticalAligment && 'modal__content--vertical',
-            unDocked && 'modal__content--undocked'
+            unDocked && 'modal-content__undocked',
+            navModal && unDocked && 'modal-content__undocked--open'
           )}
         >
           <Container>
@@ -95,13 +96,13 @@ const Modal = ({
           .modal__content {
             background-color: white;
             width: ${width};
-            height: ${height};
+            // height: ${height};
             z-index: -2;
             position: relative;
             overflow: hidden;
             opacity: 0;
             // transform: translateX(${-100}%);
-            transition: all 0.2s 0.4s;
+            transition: all 0.5s 0.4s;
           }
 
           .modal__content--open {
@@ -115,10 +116,16 @@ const Modal = ({
             height: ${height};
             overflow: hidden;
           }
-          .modal__content--undocked {
-            width: ${width};
-            height: ${height};
+          .modal-content__undocked {
+            max-width: ${width};
             overflow: hidden;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.4s 0.2s;
+          }
+          .modal-content__undocked--open {
+            opacity: 1;
+            transform: scale(1);
           }
 
           .header {
