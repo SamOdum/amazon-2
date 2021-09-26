@@ -1,6 +1,5 @@
 import React from 'react'
 import { appColors } from '../../styles/variables'
-import { useNavModal } from '../store/stateHooks'
 import { classNames } from '../utils/style'
 import CloseButton from './CloseButton'
 import Container from './Container'
@@ -11,6 +10,8 @@ interface ModalProps {
   pin?: 'top' | 'right' | 'bottom' | 'left' | 'center'
   height?: string
   width?: string
+  open: boolean
+  setOpen: () => void
 }
 
 const Modal = ({
@@ -19,25 +20,22 @@ const Modal = ({
   pin = 'left',
   height = '100vh',
   width = '18rem',
+  open,
+  setOpen,
 }: ModalProps): JSX.Element => {
-  const [navModal, setNavModal] = useNavModal()
-
-  const horizontalDock = pin === 'left' || pin === 'right'
-  const verticalDock = pin === 'top' || pin === 'bottom'
+  const horizontalDock = pin == 'left' || pin == 'right'
+  const verticalDock = pin == 'top' || pin == 'bottom'
   const unDocked = !horizontalDock && !verticalDock
 
-  const horizontalAligment = pin == 'left' ? 'start' : 'end'
-  const verticalAligment = pin == 'top' ? 'start' : 'end'
-
-  const hSlide = pin == 'left' ? -100 : 100
-  const vSlide = pin == 'top' ? -100 : 100
+  const anchor = pin == 'left' || pin == 'top' ? 'start' : 'end'
+  const slide = pin == 'left' || pin == 'top' ? -100 : 100
 
   return (
     <>
       <div
         className={classNames(
           'modal',
-          navModal && 'modal--open',
+          open && 'modal--open',
           horizontalDock && 'modal--horizontal',
           verticalDock && 'modal--vertical',
           unDocked && 'modal--undocked'
@@ -46,21 +44,19 @@ const Modal = ({
       >
         <div
           className={classNames(
-            'modal__content',
-            navModal && 'modal__content--open',
-            // verticalDock && verticalAligment && 'modal__content--vertical',
+            'modal-content',
             horizontalDock && 'modal-content__horizontal',
-            horizontalDock && navModal && 'modal-content__horizontal--open',
+            horizontalDock && open && 'modal-content__horizontal--open',
             verticalDock && 'modal-content__vertical',
-            verticalDock && navModal && 'modal-content__vertical--open',
+            verticalDock && open && 'modal-content__vertical--open',
             unDocked && 'modal-content__undocked',
-            unDocked && navModal && 'modal-content__undocked--open'
+            unDocked && open && 'modal-content__undocked--open'
           )}
         >
           <Container>
             <>
               <header className="header">
-                <CloseButton onClick={setNavModal} />
+                <CloseButton onClick={setOpen} />
               </header>
               {children}
             </>
@@ -87,11 +83,11 @@ const Modal = ({
           }
 
           .modal--horizontal {
-            justify-content: ${horizontalAligment};
+            justify-content: ${anchor};
           }
 
           .modal--vertical {
-            align-items: ${verticalAligment};
+            align-items: ${anchor};
             justify-content: center;
           }
 
@@ -100,58 +96,41 @@ const Modal = ({
             align-items: center;
           }
 
-          .modal__content {
+          .modal-content {
             background-color: white;
-            // width: ${width};
-            // height: ${height};
             z-index: -2;
             position: relative;
+            transition: all 0.4s 0.2s;
             overflow: hidden;
-            // opacity: 0;
-            // transform: translateX(${-100}%);
-            transition: all 0.5s 0.4s;
-          }
-          .modal__content--open {
-            // opacity: 1;
-            z-index: 2;
-            // transform: translateX(0%);
           }
 
           .modal-content__horizontal {
             width: ${width};
             height: ${height};
-            overflow: hidden;
-            // opacity: 1;
-            transform: translateX(${hSlide}%);
-            transition: transform 0.4s 0.2s;
+            transform: translateX(${slide}%);
           }
           .modal-content__horizontal--open {
-            width: ${width};
-            height: ${height};
-            // opacity: 1;
             transform: translateX(0);
+            z-index: 2;
           }
 
           .modal-content__vertical {
             width: 88%;
-            overflow: hidden;
-            transform: translateY(${vSlide}%);
-            transition: transform 0.4s 0.2s;
+            transform: translateY(${slide}%);
           }
           .modal-content__vertical--open {
-            overflow: hidden;
             transform: translateY(0);
+            z-index: 2;
           }
           .modal-content__undocked {
             max-width: ${width};
-            overflow: hidden;
             opacity: 0;
             transform: scale(0);
-            transition: all 0.4s 0.2s;
           }
           .modal-content__undocked--open {
             opacity: 1;
             transform: scale(1);
+            z-index: 2;
           }
 
           .header {
