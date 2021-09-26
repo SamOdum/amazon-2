@@ -30,6 +30,7 @@ const Modal = ({
   const verticalAligment = pin == 'top' ? 'start' : 'end'
 
   const hSlide = pin == 'left' ? -100 : 100
+  const vSlide = pin == 'top' ? -100 : 100
 
   return (
     <>
@@ -47,9 +48,11 @@ const Modal = ({
           className={classNames(
             'modal__content',
             navModal && 'modal__content--open',
-            verticalDock && verticalAligment && 'modal__content--vertical',
+            // verticalDock && verticalAligment && 'modal__content--vertical',
             horizontalDock && 'modal-content__horizontal',
             horizontalDock && navModal && 'modal-content__horizontal--open',
+            verticalDock && 'modal-content__vertical',
+            verticalDock && navModal && 'modal-content__vertical--open',
             unDocked && 'modal-content__undocked',
             unDocked && navModal && 'modal-content__undocked--open'
           )}
@@ -129,10 +132,15 @@ const Modal = ({
             transform: translateX(0);
           }
 
-          .modal__content--vertical {
-            width: ${width};
-            height: ${height};
+          .modal-content__vertical {
+            width: 88%;
             overflow: hidden;
+            transform: translateY(${vSlide}%);
+            transition: transform 0.4s 0.2s;
+          }
+          .modal-content__vertical--open {
+            overflow: hidden;
+            transform: translateY(0);
           }
           .modal-content__undocked {
             max-width: ${width};
