@@ -29,6 +29,8 @@ const Modal = ({
   const horizontalAligment = pin == 'left' ? 'start' : 'end'
   const verticalAligment = pin == 'top' ? 'start' : 'end'
 
+  const hSlide = pin == 'left' ? -100 : 100
+
   return (
     <>
       <div
@@ -46,8 +48,10 @@ const Modal = ({
             'modal__content',
             navModal && 'modal__content--open',
             verticalDock && verticalAligment && 'modal__content--vertical',
+            horizontalDock && 'modal-content__horizontal',
+            horizontalDock && navModal && 'modal-content__horizontal--open',
             unDocked && 'modal-content__undocked',
-            navModal && unDocked && 'modal-content__undocked--open'
+            unDocked && navModal && 'modal-content__undocked--open'
           )}
         >
           <Container>
@@ -95,20 +99,34 @@ const Modal = ({
 
           .modal__content {
             background-color: white;
-            width: ${width};
+            // width: ${width};
             // height: ${height};
             z-index: -2;
             position: relative;
             overflow: hidden;
-            opacity: 0;
+            // opacity: 0;
             // transform: translateX(${-100}%);
             transition: all 0.5s 0.4s;
           }
-
           .modal__content--open {
-            opacity: 1;
+            // opacity: 1;
             z-index: 2;
             // transform: translateX(0%);
+          }
+
+          .modal-content__horizontal {
+            width: ${width};
+            height: ${height};
+            overflow: hidden;
+            // opacity: 1;
+            transform: translateX(${hSlide}%);
+            transition: transform 0.4s 0.2s;
+          }
+          .modal-content__horizontal--open {
+            width: ${width};
+            height: ${height};
+            // opacity: 1;
+            transform: translateX(0);
           }
 
           .modal__content--vertical {
