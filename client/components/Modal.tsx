@@ -1,10 +1,13 @@
 import React from 'react'
 import { appColors } from '../../styles/variables'
 import { classNames } from '../utils/style'
+import BackButton from './BackButton'
 import CloseButton from './CloseButton'
 import Container from './Container'
 
 interface ModalProps {
+  backButton?: boolean | string
+  setBackButton: () => void
   children: JSX.Element
   datakey: string
   pin?: 'top' | 'right' | 'bottom' | 'left' | 'center'
@@ -15,6 +18,8 @@ interface ModalProps {
 }
 
 const Modal = ({
+  backButton,
+  setBackButton,
   children,
   datakey,
   pin = 'left',
@@ -56,8 +61,13 @@ const Modal = ({
           <Container>
             <>
               <header className="header">
-                <CloseButton onClick={setOpen} />
+                {!backButton ? (
+                  <CloseButton onClick={setOpen} />
+                ) : (
+                  <BackButton onClick={setBackButton} />
+                )}
               </header>
+
               {children}
             </>
           </Container>
